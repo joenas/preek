@@ -16,5 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Preek::VERSION
   gem.add_runtime_dependency "thor"
+  gem.add_runtime_dependency "psych"
   gem.add_runtime_dependency "reek"
 end
