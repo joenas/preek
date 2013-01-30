@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require "preek"
+
+unless ARGV.empty?
+  arg = ARGV[0].to_sym
+  preek = Preek::Preek.new
+  if preek.respond_to? arg
+    preek.send(arg)
+  else
+    preek.pretty arg
+  end
+else
+  Preek::Preek.start
+end
