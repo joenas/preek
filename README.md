@@ -1,5 +1,7 @@
 # Preek
 
+For a pretty colorful output of Reek, which in itself is awesome.
+
 ## Installation
 
 Install it yourself as:
