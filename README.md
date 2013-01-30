@@ -2,8 +2,11 @@
 
 ## Installation
 
-Iinstall it yourself as:
+Install it yourself as:
+
     $ git clone git@github.com:joenas/preek.git
+    
+    $ cd preek
 
     $ rake install
 
