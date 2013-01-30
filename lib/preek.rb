@@ -13,11 +13,15 @@ module Preek
       @output = `reek -q #{file}`
       @files = {}
 
-      say "\n"
-      parse_output
-      @files.each { |index, object|
-        print_pretty object
-      }
+      if @output.empty?
+        say_status 'success!', 'No smells detected.'
+      else
+        say "\n"
+        parse_output
+        @files.each { |index, object|
+          print_pretty object
+        }
+      end
     end
 
     desc 'version (-v)', 'Shows version'
