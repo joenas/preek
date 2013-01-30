@@ -12,7 +12,7 @@ module Preek
     end
 
     def klass
-      file_klass
+      @smell.context[@context_reg, 1]
     end
 
     def file
@@ -29,24 +29,8 @@ module Preek
     end
 
   private
-    def file_klass
-      @smell.context[@context_reg, 1]
-    end
-
     def smell_method
       @smell.context[@context_reg, 2]
-    end
-
-    def smell_klass
-      @smell.smell['subclass']
-    end
-
-    def smell_description
-      @smell.message
-    end
-
-    def smell_line
-      @smell.lines
     end
   end
 end
