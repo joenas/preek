@@ -65,7 +65,7 @@ module Preek
     end
 
     def print_line
-      say "\n\t------------------------------------------------------------\n\n"
+      say "\n\t#{'-'*60}\n\n"
     end
   end
 end
