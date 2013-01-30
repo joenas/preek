@@ -3,12 +3,12 @@
 require "preek"
 
 unless ARGV.empty?
-  arg = ARGV[0].to_sym
+  action = ARGV.shift.to_sym
   preek = Preek::Preek.new
-  if preek.respond_to? arg
-    preek.send(arg)
+  if preek.respond_to? action
+    preek.send(action, ARGV[0])
   else
-    preek.pretty arg
+    preek.parse action
   end
 else
   Preek::Preek.start
