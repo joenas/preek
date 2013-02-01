@@ -2,10 +2,10 @@
 require File.expand_path('../lib/preek/version', __FILE__)
 
 Gem::Specification.new do |gem|
-  gem.authors       = ["jonnev"]
-  gem.email         = ["jonnev@bredband2.se"]
+  gem.authors       = ["Jon Neverland"]
+  gem.email         = ["jonwestin@gmail.com"]
   gem.description   = %q{Gives the nice output to the reek}
-  gem.summary       = %q{it reeks buts its pretty}
+  gem.summary       = %q{It might reek but its pretty}
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)
