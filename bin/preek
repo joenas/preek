@@ -1,14 +1,14 @@
 #!/usr/bin/env ruby
 
 require "preek"
+#require_relative "../lib/preek"
 
 unless ARGV.empty?
-  action = ARGV.shift.to_sym
   preek = Preek::Preek.new
-  if preek.respond_to? action
-    preek.send(action, ARGV[0])
+  if preek.respond_to? ARGV[0]
+    preek.send ARGV.shift.to_sym, ARGV
   else
-    preek.parse action
+    preek.parse ARGV
   end
 else
   Preek::Preek.start

@@ -1,7 +1,7 @@
 module Preek
 
   require 'thor'
-  require 'psych'
+  #require 'psych'
   require 'reek'
   require 'preek/parser'
   require "preek/version"
@@ -15,10 +15,10 @@ module Preek
     end
 
     desc 'FILE', 'Pretty format Reek output'
-    def parse(file)
+    def parse(args)
       @smells = {}
       @errors = {}
-      @output = `reek -qy #{file}`
+      @output = Reek::Examiner.new(args).smells
       if @output.empty?
         say_status 'success!', 'No smells detected.'
       else
@@ -34,7 +34,10 @@ module Preek
     end
 
     def parse_smells
-      Psych.load(@output).each {|smell|
+      # Psych.load(@output).each {|smell|
+      #   setup_smell Parser.new(smell)
+      # }
+      @output.each {|smell|
         setup_smell Parser.new(smell)
       }
     end
