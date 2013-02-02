@@ -11,12 +11,8 @@ module Preek
       @smell.source.to_sym.object_id
     end
 
-    def klass
-      @smell.context[@context_reg, 1]
-    end
-
-    def file
-      @smell.source
+    def info
+      { file: @smell.source, klass: klass }
     end
 
     def smell
@@ -31,6 +27,10 @@ module Preek
   private
     def smell_method
       @smell.context[@context_reg, 2]
+    end
+
+    def klass
+      @smell.context[@context_reg, 1]
     end
   end
 end

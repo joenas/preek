@@ -1,10 +1,9 @@
 module Preek
 
   require 'thor'
-  #require 'psych'
   require 'reek'
   require 'preek/parser'
-  require "preek/version"
+  require 'preek/version'
   # whoop whoop
   class Preek < Thor
     include Thor::Actions
@@ -16,9 +15,14 @@ module Preek
 
     desc 'FILE', 'Pretty format Reek output'
     def parse(args)
-      @smells = {}
-      @errors = {}
-      @output = Reek::Examiner.new(args).smells
+      @files, not_files = args.partition { |file| File.exists? file }
+      run_reek_examiner unless @files.empty?
+      say_status :error, "No such file(s) - #{not_files*", "}.", :red unless not_files.empty?
+    end
+
+  private
+    def run_reek_examiner
+      @output = Reek::Examiner.new(@files).smells
       if @output.empty?
         say_status 'success!', 'No smells detected.'
       else
@@ -26,29 +30,22 @@ module Preek
       end
     end
 
-  private
     def show_me_the_smells
+      @smells = {}
+      @errors = Hash.new { |hash, key| hash[key] = [] }
+
       parse_smells
       print_smells
       print_line
     end
 
     def parse_smells
-      # Psych.load(@output).each {|smell|
-      #   setup_smell Parser.new(smell)
-      # }
-      @output.each {|smell|
-        setup_smell Parser.new(smell)
-      }
-    end
-
-    def setup_smell(parsed_smell)
-      ident = parsed_smell.identifier
-      unless @smells[ident]
-        @smells[ident] = {file: parsed_smell.file, klass: parsed_smell.klass }
-        @errors[ident] = []
+      @output.each do |smell|
+        parsed_smell = Parser.new smell
+        ident = parsed_smell.identifier
+        @smells[ident] ||= parsed_smell.info
+        @errors[ident] << parsed_smell.smell
       end
-      @errors[ident] << parsed_smell.smell
     end
 
     def print_smells
