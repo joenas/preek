@@ -4,19 +4,28 @@ module Preek
   class Parser
     def initialize(smell)
       @smell = smell
+      #puts @smell.methods(true)#.inspect
+      #[:smell, :smell_class, :subclass, :message, :location, :context, :status ].each do |mee|
+      [:klass, :smell_method ].each do |mee|
+        puts "#{mee}:"
+        puts @smell.send(mee)
+        puts "\n"
+      end
+      exit
       @context_reg = /^([\w:]*)(#\w*)?/
     end
 
-    def identifier
-      @smell.source.to_sym.object_id
+    def file
+      @smell.source
     end
 
-    def info
-      { file: @smell.source, klass: klass }
+    def klass
+      @smell.context[@context_reg, 1]
     end
 
     def smell
       {
+        klass: klass,
         method: smell_method,
         smell: @smell.subclass,
         desc: @smell.message,
@@ -24,13 +33,8 @@ module Preek
       }
     end
 
-  private
     def smell_method
       @smell.context[@context_reg, 2]
-    end
-
-    def klass
-      @smell.context[@context_reg, 1]
     end
   end
 end
