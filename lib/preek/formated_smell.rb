@@ -6,7 +6,7 @@ module Preek
   	end
 
     def print_data
-      "#{@data[:method]} #{@data[:desc]} (#{@data[:smell]}) at lines #{@data[:lines]}"
+      "#{@data.smell_method} #{@data.message} (#{@data.subclass}) at lines #{@data.lines*','}"
     end
   end
 end

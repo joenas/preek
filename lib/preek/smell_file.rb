@@ -8,10 +8,6 @@ module Preek
       @klass_collector = KlassCollector.new
     end
 
-    # def smelly?
-    #   not @smells.empty?
-    # end
-
     def klasses
       add_smells_to_klass
       @klass_collector.get_klasses
@@ -24,8 +20,7 @@ module Preek
   private
     def add_smells_to_klass
       @smells.each do |smell|
-        parsed_smell = Parser.new smell
-        @klass_collector.find(parsed_smell.klass).add_smell parsed_smell.smell
+        @klass_collector.find(smell.klass).add_smell smell
       end
     end
 

@@ -11,7 +11,7 @@ module Preek
     end
 
     def name
-      @smells.first[:klass]
+      @smells.first.klass
     end
 
     def smells

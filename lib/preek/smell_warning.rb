@@ -1,11 +1,12 @@
 module Reek
+  # Is was easier this way
   class SmellWarning
     def klass
-      context[/^([\w:]*)(#\w*)?/, 1]
+      @location[CONTEXT_KEY][/^([\w:]*)(#\w*)?/, 1]
     end
 
     def smell_method
-      context[/^([\w:]*)(#\w*)?/, 2]
+      @location[CONTEXT_KEY][/^([\w:]*)(#\w*)?/, 2]
     end
   end
 end
