@@ -16,7 +16,8 @@ module Preek
 
     def smells
       @smells.map do |smell|
-        FormatedSmell.new(smell).print_data
+        smell.smell_string
+        #FormatedSmell.new(smell).print_data
       end
     end
   end

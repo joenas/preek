@@ -9,9 +9,6 @@ module Preek
     end
 
     def smelly_files
-      # @files.select do |file|
-      #   file.smelly?
-      # end
       @files.reject(&:nil?)
     end
 
@@ -19,7 +16,6 @@ module Preek
     def examine_sources
       @sources.map do |source|
         smells = Reek::Examiner.new(source).smells
-        #puts smells.inspect
         SmellFile.new smells unless smells.empty?
       end
     end

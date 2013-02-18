@@ -1,6 +1,5 @@
 module Preek
   require 'preek/klass_collector'
-  require 'preek/parser'
   # A smelly file
   class SmellFile
     def initialize(smells)
@@ -22,10 +21,6 @@ module Preek
       @smells.each do |smell|
         @klass_collector.find(smell.klass).add_smell smell
       end
-    end
-
-    def get_file
-
     end
   end
 end
