@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/joenas/preek.png)](https://codeclimate.com/github/joenas/preek)
+
 # Preek
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
