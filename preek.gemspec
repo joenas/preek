@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["jonwestin@gmail.com"]
   gem.description   = %q{Gives the nice output to the reek}
   gem.summary       = %q{It might reek but its pretty}
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/joenas/preek"
 
   gem.files         = `git ls-files`.split($\)
   #gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -16,6 +16,6 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Preek::VERSION
   gem.add_runtime_dependency "thor"
-#  gem.add_runtime_dependency "psych"
   gem.add_runtime_dependency "reek"
+  gem.add_development_dependency "rspec"
 end

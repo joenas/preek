@@ -1,71 +1,36 @@
 module Preek
-
-  require 'thor'
   require 'reek'
-  require 'preek/parser'
+  require 'thor'
+  require 'preek/smell_collector'
+  require 'preek/smell_reporter'
   require 'preek/version'
+  require_relative 'preek/smell_warning'
   # whoop whoop
   class Preek < Thor
     include Thor::Actions
 
-    desc 'version (-v)', 'Shows version'
+    desc 'version', 'Shows version'
     def version(*)
       say VERSION
     end
 
     desc 'FILE', 'Pretty format Reek output'
     def parse(args)
-      @files, not_files = args.partition { |file| File.exists? file }
-      run_reek_examiner unless @files.empty?
-      say_status :error, "No such file(s) - #{not_files*", "}.", :red unless not_files.empty?
+      files, @not_files = args.partition { |file| File.exists? file }
+      report_smells_for files unless files.empty?
+      report_not_files
     end
 
   private
-    def run_reek_examiner
-      @output = Reek::Examiner.new(@files).smells
-      if @output.empty?
-        say_status 'success!', 'No smells detected.'
-      else
-        show_me_the_smells
-      end
+    def report_smells_for files
+      sources = Reek::Source::SourceLocator.new(files).all_sources
+      smelly_files = SmellCollector.new(sources).smelly_files
+      @reporter = SmellReporter.new(smelly_files)
+      @reporter.print_smells
     end
 
-    def show_me_the_smells
-      @smells = {}
-      @errors = Hash.new { |hash, key| hash[key] = [] }
-
-      parse_smells
-      print_smells
-      print_line
-    end
-
-    def parse_smells
-      @output.each do |smell|
-        parsed_smell = Parser.new smell
-        ident = parsed_smell.identifier
-        @smells[ident] ||= parsed_smell.info
-        @errors[ident] << parsed_smell.smell
-      end
-    end
-
-    def print_smells
-      @smells.each do |index, object|
-        pretty_print index, object
-      end
-    end
-
-    def pretty_print(index, object)
-      print_line
-      say_status 'file', object[:file], :blue
-      say_status 'class', object[:klass]
-      say_status 'smells', '', :red
-      @errors[index].each {|error|
-       say_status nil, "#{set_color("#{error[:method]}", :red, :bold)} #{error[:desc]} (#{error[:smell]}) at lines #{error[:lines]}"
-      }
-    end
-
-    def print_line
-      say "\n\t#{'-'*60}\n\n"
+    def report_not_files
+      say_status :error, "No such file(s) - #{@not_files*", "}.", :red unless @not_files.empty?
     end
   end
 end
