@@ -1,8 +1,10 @@
 [![Code Climate](https://codeclimate.com/github/joenas/preek.png)](https://codeclimate.com/github/joenas/preek)
+[![Build Status](https://travis-ci.org/joenas/preek.png)](https://travis-ci.org/joenas/preek)
 
 # Preek
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
+This is just something I came up with while learning [Thor](https://github.com/wycats/thor). I also worked on getting Reek and Pelusa to stop whining about the code.
 
 ## Installation
 
@@ -13,6 +15,11 @@ Install it yourself as:
     $ cd preek
 
     $ rake install
+    
+or
+
+    $ gem install preek
+
 
 ## Usage
 
