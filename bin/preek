@@ -1,7 +1,5 @@
 #!/usr/bin/env ruby
-
 require "preek"
-#require_relative "../lib/preek"
 
 unless ARGV.empty?
   preek = Preek::Preek.new
