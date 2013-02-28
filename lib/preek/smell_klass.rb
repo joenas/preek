@@ -1,5 +1,4 @@
 module Preek
-  require 'preek/formated_smell'
   # A container for a smelly klass in a file!
   class SmellKlass
     def initialize

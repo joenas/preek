@@ -1,10 +1,10 @@
 module Preek
   require 'reek'
   require 'thor'
+  require 'preek/version'
   require 'preek/smell_collector'
   require 'preek/smell_reporter'
-  require 'preek/version'
-  require_relative 'preek/smell_warning'
+  require 'preek/smell_warning'
   # whoop whoop
   class Preek < Thor
     include Thor::Actions
