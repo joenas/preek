@@ -24,6 +24,11 @@ or
 ## Usage
 
     $ preek . or file
+    
+At the moment it only supports files, not stuff like this:
+
+    $ echo "def x() true end" | reek
+
 
 ## Contributing
 
