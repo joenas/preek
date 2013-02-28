@@ -1,3 +1,6 @@
+require 'simplecov'
+SimpleCov.start
+
 $:.unshift(File.join(File.dirname(__FILE__), "..", "lib"))
 require 'stringio'
 require File.expand_path('../../lib/preek', __FILE__)

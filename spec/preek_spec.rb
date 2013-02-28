@@ -6,6 +6,13 @@ describe Preek::Preek do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
+  describe "#version" do
+    let(:output) { capture(:stdout) { subject.version} }
+    it "outputs the gem version in the right format" do
+      output.should =~ /(\d\.?){3}/
+    end
+  end
+
   describe "#parse" do
     let(:output) { capture(:stdout) { subject.parse(args) } }
 
