@@ -9,7 +9,7 @@ module Preek
     end
 
     def smelly_files
-      @files.reject(&:nil?)
+      @files.compact#reject(&:nil?)
     end
 
   private
