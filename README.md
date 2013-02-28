@@ -4,8 +4,6 @@
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
 
-Will release as a gem later on...
-
 ## Installation
 
 Install it yourself as:
