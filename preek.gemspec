@@ -17,7 +17,6 @@ Gem::Specification.new do |gem|
   gem.version       = Preek::VERSION
   gem.add_runtime_dependency "thor", ">=0.16"
   gem.add_runtime_dependency "reek", ">=1.3"
-  #gem.add_runtime_dependency "rake"
   gem.add_development_dependency "rspec", ">=2.13"
   gem.add_development_dependency "guard", ">=1.6"
   gem.add_development_dependency "guard-rspec", "2.4"
