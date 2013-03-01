@@ -4,7 +4,7 @@ require File.expand_path('../lib/preek/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Jon Neverland"]
   gem.email         = ["jonwestin@gmail.com"]
-  gem.description   = %q{Gives the nice output to the reek}
+  gem.description   = %q{Gives a nice, colorful output to Reek. Based on Thor.}
   gem.summary       = %q{It might reek but its pretty}
   gem.homepage      = "https://github.com/joenas/preek"
 
@@ -15,12 +15,10 @@ Gem::Specification.new do |gem|
   gem.name          = "preek"
   gem.require_paths = ["lib"]
   gem.version       = Preek::VERSION
-  gem.add_runtime_dependency "thor"
-  gem.add_runtime_dependency "reek"
-  gem.add_runtime_dependency "rake"
-  gem.add_development_dependency "rake"
-  gem.add_development_dependency "rspec"
-  gem.add_development_dependency "guard"
-  gem.add_development_dependency "guard-rspec"
-  gem.add_development_dependency "simplecov"
+  gem.add_runtime_dependency "thor", ">=0.16"
+  gem.add_runtime_dependency "reek", ">=1.3"
+  #gem.add_runtime_dependency "rake"
+  gem.add_development_dependency "rspec", ">=2.13"
+  gem.add_development_dependency "guard", ">=1.6"
+  gem.add_development_dependency "guard-rspec", "2.4"
 end

@@ -4,18 +4,19 @@
 # Preek
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
-This is just something I came up with while learning [Thor](https://github.com/wycats/thor). I also worked on getting Reek and Pelusa to stop whining about the code.
+This is just something I came up with while learning [Thor](https://github.com/wycats/thor).
+As an exercise I also worked on getting Reek and Pelusa to stop whining when running them on the code.
 
 ## Installation
 
 Install it yourself as:
 
     $ git clone git@github.com:joenas/preek.git
-    
+
     $ cd preek
 
     $ rake install
-    
+
 or
 
     $ gem install preek
@@ -24,7 +25,7 @@ or
 ## Usage
 
     $ preek . or file
-    
+
 At the moment it only supports files, not stuff like this:
 
     $ echo "def x() true end" | reek
