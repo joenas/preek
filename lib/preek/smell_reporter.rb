@@ -34,7 +34,6 @@ module Preek
       say "\n\t#{'-'*60}\n\n"
     end
 
-  
     def padding; 0; end
 
     def format_path file
