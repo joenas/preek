@@ -74,5 +74,15 @@ describe Preek::Preek do
         output.should include("#loong_method", "#x")
       end
     end
+
+    context "when given file has NilCheck smell" do
+      let(:args){ [test_file('nil_check')] }
+      it "output contains 'NilCheck'" do
+        output.should include("NilCheck")
+      end
+      it "outputs the name of the file" do
+        output.should include(args[0])
+      end
+    end
   end
 end
