@@ -7,6 +7,7 @@ Gem::Specification.new do |gem|
   gem.description   = %q{Gives a nice, colorful output to Reek. Based on Thor.}
   gem.summary       = %q{It might reek but its pretty}
   gem.homepage      = "https://github.com/joenas/preek"
+  gem.license       = 'MIT'
 
   gem.files         = `git ls-files`.split($\)
   #gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
