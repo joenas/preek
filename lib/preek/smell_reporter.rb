@@ -7,6 +7,7 @@ module Preek
     end
 
     def print_smells
+      @smelly_files.delete_if {|smell_file| smell_file.klasses.empty? }
       return say_status 'success!', 'No smells detected.' if @smelly_files.empty?
       print_line
       @smelly_files.each do |smell|

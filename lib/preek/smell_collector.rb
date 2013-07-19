@@ -3,8 +3,9 @@ module Preek
   require 'preek/smell_file'
   # This is a 'Collector'
   class SmellCollector
-    def initialize sources
+    def initialize(sources, excludes)
       @sources = sources
+      @excludes = excludes
       @files = examine_sources
     end
 
@@ -16,7 +17,7 @@ module Preek
     def examine_sources
       @sources.map do |source|
         smells = Reek::Examiner.new(source).smells
-        SmellFile.new smells unless smells.empty?
+        SmellFile.new(smells, @excludes) unless smells.empty?
       end
     end
   end

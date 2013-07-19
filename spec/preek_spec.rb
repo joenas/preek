@@ -14,7 +14,8 @@ describe Preek::Preek do
   end
 
   describe "#parse" do
-    let(:output) { capture(:stdout) { subject.parse(args) } }
+    let(:output) { capture(:stdout) { subject.parse(*args) } }
+    let(:args) { ['i/am/not/a_file'] }
 
     context "with non-existing file in ARGS" do
       let(:args) { ['i/am/not/a_file'] }
@@ -35,16 +36,40 @@ describe Preek::Preek do
 
     context "when given file has Irresponsible smell" do
       let(:args){ [test_file('irresponsible')] }
+      it "output contains 'success! No smells'" do
+        output.should include("No smells")
+      end
+    end
+
+    context "when given file has Irresponsible smell with --irresponsible options" do
+      let(:args){ [test_file('irresponsible')] }
+
+      before :each do
+        subject.options =  {irresponsible: true}
+      end
+
       it "output contains 'Irresponsible'" do
         output.should include("Irresponsible")
       end
-      it "outputs the name of the file" do
-        output.should include(args[0])
-      end
+
     end
 
     context "when given a file with two smelly classes" do
       let(:args){ [test_file('two_smelly_classes')] }
+      it "output contains one classnames" do
+        output.should include('SecondSmelly')
+      end
+      it "output contains one smell" do
+        output.should include('UncommunicativeMethodName')
+      end
+    end
+
+    context "when given a file with two smelly classes with --irresponsible options" do
+      let(:args){ [test_file('two_smelly_classes')] }
+      before :each do
+        subject.options =  {irresponsible: true}
+      end
+
       it "output contains both classnames" do
         output.should include('FirstSmelly', 'SecondSmelly')
       end
@@ -53,15 +78,20 @@ describe Preek::Preek do
       end
     end
 
-    context "when given a file with two different smells" do
+    context "when given a file with two different smells with --irresponsible options" do
       let(:args){ [test_file('irresponsible_and_lazy')] }
       it "output contains both smells" do
+        subject.options =  {irresponsible: true}
         output.should include('IrresponsibleModule', 'UncommunicativeMethodName')
       end
     end
 
     context "when given two smelly files" do
       let(:args){ [test_file('too_many_statements'), test_file('two_smelly_classes')] }
+      before :each do
+        subject.options =  {irresponsible: true}
+      end
+
       it "output contains all smells" do
         output.should include('IrresponsibleModule', 'UncommunicativeMethodName', 'TooManyStatements')
       end
