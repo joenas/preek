@@ -26,8 +26,19 @@ or
 
 
 ## Usage
+```bash
+Usage:
+  preek smell FILE(S)|DIR
 
-    $ preek . or file
+Options:
+  -i, [--irresponsible]  # include IrresponsibleModule smell in output.
+
+
+Commands:
+  preek help [COMMAND]     # Describe available commands or one specific command
+  preek smell FILE(S)|DIR  # Pretty format Reek output
+  preek version            # Shows version
+```
 
 At the moment it only supports files, not stuff like this:
 
