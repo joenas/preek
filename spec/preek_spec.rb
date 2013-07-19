@@ -14,7 +14,7 @@ describe Preek::Preek do
   end
 
   describe "#parse" do
-    let(:output) { capture(:stdout) { subject.parse(*args) } }
+    let(:output) { capture(:stdout) { subject.smell(*args) } }
     let(:args) { ['i/am/not/a_file'] }
 
     context "with non-existing file in ARGS" do

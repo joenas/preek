@@ -23,12 +23,12 @@ module Preek
       args ||= @args
       @includes = options.keys.map {|key| _aliases[key.to_sym] }
       files, @not_files = args.partition { |file| File.exists? file }
-      report_smells_for(files, excludes) unless files.empty?
+      report_smells_for(files) unless files.empty?
       report_not_files
     end
 
   private
-    def report_smells_for(files, includes)
+    def report_smells_for(files)
       sources = Reek::Source::SourceLocator.new(files).all_sources
       smelly_files = SmellCollector.new(sources, excludes).smelly_files
       @reporter = SmellReporter.new(smelly_files)
