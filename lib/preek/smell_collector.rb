@@ -1,6 +1,4 @@
 module Preek
-  require 'reek'
-  require 'preek/smell_file'
   # This is a 'Collector'
   class SmellCollector
     def initialize(sources, excludes)
@@ -10,7 +8,7 @@ module Preek
     end
 
     def smelly_files
-      @files.compact#reject(&:nil?)
+      @files.compact
     end
 
   private

@@ -9,9 +9,9 @@ module Preek
     def print_smells
       return say_status 'success!', 'No smells detected.' if @smelly_files.empty?
       print_line
-      @smelly_files.each do |smell|
-        say_status 'file', format_path(smell.file), :blue
-        print_klasses smell.klasses
+      @smelly_files.each do |smelly|
+        say_status 'file', format_path(smelly.file), :blue
+        print_klasses smelly.klasses
       end
     end
   private
@@ -38,7 +38,7 @@ module Preek
     def padding; 0; end
 
     def format_path file
-      File.expand_path(file)#.gsub(Dir.pwd, ".")
+      File.expand_path(file)
     end
   end
 end

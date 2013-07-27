@@ -1,10 +1,14 @@
 module Preek
   require 'reek'
   require 'thor'
+
   require 'preek/version'
   require 'preek/smell_collector'
   require 'preek/smell_reporter'
   require 'preek/smell_warning'
+  require 'preek/smell_file'
+  require 'preek/klass_collector'
+
   # whoop whoop
   class Preek < Thor
     include Thor::Actions
@@ -22,21 +26,22 @@ module Preek
     def smell(*args)
       args ||= @args
       @includes = options.keys.map {|key| _aliases[key.to_sym] }
-      files, @not_files = args.partition { |file| File.exists? file }
-      report_smells_for(files) unless files.empty?
+      @files, @not_files = args.partition { |file| File.exists? file }
+      report_smells
       report_not_files
     end
 
   private
-    def report_smells_for(files)
-      sources = Reek::Source::SourceLocator.new(files).all_sources
+    def report_smells
+      return if @files.empty?
+      sources = Reek::Source::SourceLocator.new(@files).all_sources
       smelly_files = SmellCollector.new(sources, excludes).smelly_files
-      @reporter = SmellReporter.new(smelly_files)
-      @reporter.print_smells
+      SmellReporter.new(smelly_files).print_smells
     end
 
     def report_not_files
-      say_status :error, "No such file(s) - #{@not_files*", "}.", :red unless @not_files.empty?
+      return if @not_files.empty?
+      say_status :error, "No such file(s) - #{@not_files.join(', ')}.", :red
     end
 
     def _aliases
@@ -46,7 +51,7 @@ module Preek
     end
 
     def excludes
-      (exclude_list - @includes)#.map(&:to_s).map(&:capitalize)
+      (exclude_list - @includes)
     end
 
     def exclude_list

@@ -1,5 +1,4 @@
 module Preek
-  require 'preek/klass_collector'
   # A smelly file
   class SmellFile
     def initialize(smells, excludes)
@@ -10,7 +9,7 @@ module Preek
     end
 
     def klasses
-      @klass_collector.get_klasses
+      @klass_collector.klasses
     end
 
     def file
@@ -21,7 +20,7 @@ module Preek
     def add_smells_to_klass
       @smells.each do |smell|
         next if @excludes.include? smell.smell_class
-        @klass_collector.find(smell.klass).add_smell smell
+        @klass_collector.find(smell.klass).add smell
       end
     end
   end

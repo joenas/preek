@@ -5,7 +5,7 @@ module Preek
       @smells = []
     end
 
-    def add_smell smell
+    def add(smell)
       @smells << smell
     end
 
@@ -14,10 +14,7 @@ module Preek
     end
 
     def smells
-      @smells.map do |smell|
-        smell.smell_string
-        #FormatedSmell.new(smell).print_data
-      end
+      @smells.map(&:smell_string)
     end
   end
 end
