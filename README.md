@@ -9,24 +9,23 @@
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
 This is just something I came up with while learning [Thor](https://github.com/wycats/thor).
-As an exercise I also worked on getting Reek and Pelusa to stop whining when running them on the code.
 
 ## Installation
 
-Install it yourself as:
+    $ gem install preek
+
+From source
 
     $ git clone git@github.com:joenas/preek.git
-
     $ cd preek
-
     $ rake install
 
-or
 
-    $ gem install preek
 
 
 ## Usage
+
+### CLI
 ```bash
 Usage:
   preek smell FILE(S)|DIR
@@ -45,6 +44,14 @@ At the moment it only supports files, not stuff like this:
 
     $ echo "def x() true end" | reek
 
+### Ruby
+
+```ruby
+excludes = %w(IrresponsibleModule)
+smelly_files = SmellCollector.new(@files, excludes).smelly_files
+SmellReporter.new(smelly_files).print_smells
+
+```
 
 ## Contributing
 
