@@ -1,6 +1,9 @@
 require 'spec_helper'
+require 'capture_helper'
+require 'preek/cli'
 
-describe Preek::Preek do
+describe Preek::CLI do
+  include CaptureHelper
 
   def test_file(file_name)
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))

@@ -1,14 +1,5 @@
 #!/usr/bin/env ruby
 require "preek"
+require "preek/cli"
 
-# unless ARGV.empty?
-#   preek = Preek::Preek.new
-#   if preek.respond_to? ARGV[0]
-#     preek.send ARGV.shift.to_sym, ARGV
-#   else
-#     preek.parse ARGV
-#   end
-# else
-#   Preek::Preek.start
-# end
-Preek::Preek.start
+Preek::CLI.start

@@ -1,3 +1,4 @@
+require 'thor/shell/color'
 module Preek
   # Here we report the smells in a nice fashion
   class SmellReporter < Thor::Shell::Color
@@ -10,7 +11,7 @@ module Preek
       return say_status 'success!', 'No smells detected.' if @smelly_files.empty?
       print_line
       @smelly_files.each do |smelly|
-        say_status 'file', format_path(smelly.file), :blue
+        say_status 'file', format_path(smelly.filename), :blue
         print_klasses smelly.klasses
       end
     end
