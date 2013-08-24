@@ -1,7 +1,10 @@
 module Preek
   # A container for a smelly klass in a file!
   class SmellKlass
-    def initialize
+    attr_reader :name
+
+    def initialize(name)
+      @name = name
       @smells = []
     end
 
@@ -9,9 +12,7 @@ module Preek
       @smells << smell
     end
 
-    def name
-      @smells.first.klass
-    end
+    alias :<< :add
 
     def smells
       @smells.map(&:smell_string)

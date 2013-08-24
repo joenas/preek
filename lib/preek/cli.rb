@@ -32,7 +32,7 @@ module Preek
     def report_smells
       return if @files.empty?
       smelly_files = SmellCollector.new(@files, excludes).smelly_files
-      SmellReporter.new(smelly_files).print_smells
+      SmellReporter.new(smelly_files).print_result
     end
 
     def report_not_files

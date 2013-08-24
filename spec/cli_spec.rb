@@ -108,6 +108,25 @@ describe Preek::CLI do
       end
     end
 
+    context "when given one file without smells and another with smells" do
+      let(:args){ [test_file('non_smelly'), test_file('two_smelly_classes')] }
+      before :each do
+        subject.options =  {irresponsible: true}
+      end
+
+      it "output contains all smells" do
+        output.should include('IrresponsibleModule', 'UncommunicativeMethodName')
+      end
+
+      it "output contains only smelly filename" do
+        output.should include(args[1])
+      end
+
+      it "output contains the names of the smelly method" do
+        output.should include("#x")
+      end
+    end
+
     context "when given file has NilCheck smell" do
       let(:args){ [test_file('nil_check')] }
       it "output contains 'NilCheck'" do
