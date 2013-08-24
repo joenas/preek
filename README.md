@@ -1,3 +1,4 @@
+[![Gem Version](https://badge.fury.io/rb/preek.png)](http://badge.fury.io/rb/preek)
 [![Code Climate](https://codeclimate.com/github/joenas/preek.png)](https://codeclimate.com/github/joenas/preek)
 [![Build Status](https://travis-ci.org/joenas/preek.png)](https://travis-ci.org/joenas/preek)
 [![Dependency Status](https://gemnasium.com/joenas/preek.png)](https://gemnasium.com/joenas/preek)
