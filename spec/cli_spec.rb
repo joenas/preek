@@ -22,6 +22,9 @@ describe Preek::CLI do
 
     context "with non-existing file in ARGS" do
       let(:args) { ['i/am/not/a_file'] }
+      # it "does not output 'success'" do
+      #   output.should_not include("success")
+      # end
       it "outputs 'No such file'" do
         output.should include("No such file")
       end

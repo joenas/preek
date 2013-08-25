@@ -9,7 +9,7 @@ module Preek
   # This is a 'Collector'
   class SmellCollector
     def initialize(files, excludes = [])
-      @files = files
+      @files = files.delete_if { |file| !File.exists? file }
       @excludes = excludes
     end
 

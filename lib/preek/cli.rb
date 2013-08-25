@@ -21,33 +21,22 @@ module Preek
                   aliases: '-i',
                   desc: 'include IrresponsibleModule smell in output.'
     def smell(*args)
-      args ||= @args
-      @includes = options.keys.map {|key| _aliases[key.to_sym] }
-      @files, @not_files = args.partition { |file| File.exists? file }
-      report_smells
-      report_not_files
+      Preek::Smell(args, excludes)
     end
 
   private
-    def report_smells
-      return if @files.empty?
-      smelly_files = SmellCollector.new(@files, excludes).smelly_files
-      SmellReporter.new(smelly_files).print_result
-    end
-
-    def report_not_files
-      return if @not_files.empty?
-      say_status :error, "No such file(s) - #{@not_files.join(', ')}.", :red
-    end
-
     def _aliases
       {
         irresponsible: 'IrresponsibleModule'
       }
     end
 
+    def includes
+      options.keys.map {|key| _aliases[key.to_sym] }
+    end
+
     def excludes
-      (exclude_list - @includes)
+      (exclude_list - includes)
     end
 
     def exclude_list
