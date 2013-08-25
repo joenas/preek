@@ -47,9 +47,16 @@ At the moment it only supports files, not stuff like this:
 ### Ruby
 
 ```ruby
+# Convenience method, prints all smells in files
+
+filenames = Dir['**/*.rb']
+Preek::Smell(filenames)
+
+# To exclude certain smell classes
+
 excludes = %w(IrresponsibleModule)
-smelly_files = SmellCollector.new(@files, excludes).smelly_files
-SmellReporter.new(smelly_files).print_smells
+Preek::Smell(filenames, excludes)
+
 
 ```
 
