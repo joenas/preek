@@ -20,7 +20,6 @@ Gem::Specification.new do |gem|
   gem.add_runtime_dependency "reek", ">=1.3"
   gem.add_development_dependency "rspec", ">=2.13"
   gem.add_development_dependency "guard", ">=1.6"
-  gem.add_development_dependency "guard-pushover"
   gem.add_development_dependency "guard-rspec", ">=2.4"
   gem.add_development_dependency 'coveralls'
 end

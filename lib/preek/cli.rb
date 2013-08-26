@@ -1,8 +1,5 @@
 require 'thor'
-
 require 'preek/version'
-require 'preek/smell_collector'
-require 'preek/smell_reporter'
 
 module Preek
 
@@ -20,6 +17,7 @@ module Preek
                   type: :boolean,
                   aliases: '-i',
                   desc: 'include IrresponsibleModule smell in output.'
+
     def smell(*args)
       Preek::Smell(args, excludes)
     end

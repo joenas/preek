@@ -9,12 +9,6 @@ describe Preek::CLI do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
-  describe 'hello', :focus do
-    #it { subject.smell(*['/home/jon/Projects/work/BOSS/obc/lib'])}
-    #it { subject.smell(*[test_file('non_smelly'), test_file('too_many_statements'), test_file('two_smelly_classes')])}
-    it { subject.smell(*['/home/jon/Projects/gems/preek/lib'])}
-  end
-
   describe "#version" do
     let(:output) { capture(:stdout) { subject.version} }
     it "outputs the gem version in the right format" do
@@ -28,9 +22,9 @@ describe Preek::CLI do
 
     context "with non-existing file in ARGS" do
       let(:args) { ['i/am/not/a_file'] }
-      # it "does not output 'success'" do
-      #   output.should_not include("success")
-      # end
+      it "does not output 'success'" do
+        output.should_not include("success")
+      end
       it "outputs 'No such file'" do
         output.should include("No such file")
       end
