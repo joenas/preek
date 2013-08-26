@@ -18,11 +18,31 @@ module Preek
                   aliases: '-i',
                   desc: 'include IrresponsibleModule smell in output.'
 
+    method_option :compact,
+                  type: :boolean,
+                  aliases: '-c',
+                  desc: 'Compact output'
+
+    method_option :quiet,
+                  type: :boolean,
+                  aliases: '-q',
+                  desc: 'Dont display files with no smells'
+
+
     def smell(*args)
-      Preek::Smell(args, excludes)
+      Examiner.new(args, excludes, reporter: reporter, output: output).perform
     end
 
   private
+
+    def reporter
+      options[:quiet] ? QuietReport : StandardReport
+    end
+
+    def output
+      options[:compact] ? CompactOutput : Output
+    end
+
     def _aliases
       {
         irresponsible: 'IrresponsibleModule'
