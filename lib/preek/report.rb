@@ -10,6 +10,7 @@ module Preek
     end
 
     def report
+      header
       if @examiner.smelly?
         report_smells
       else
@@ -19,11 +20,17 @@ module Preek
 
     private
 
-    def report_smells
+    def header
       @output.print_line
       @output.blue :file, "#{@examiner.description}\n"
-      file = SmellFile.new(@examiner)
-      file.klasses.each do |name, klass|
+    end
+
+    def smell_file
+      SmellFile.new(@examiner)
+    end
+
+    def report_smells
+      smell_file.klasses.each do |name, klass|
         @output.green :class, klass.name
         @output.red :smells, ''
         print_klass_smells klass.smells
@@ -35,15 +42,13 @@ module Preek
     end
 
     def report_success
-      @output.print_line
-      @output.blue :file, @examiner.description
       @output.green :success, "No smells detected.\n"
     end
   end
 
   class QuietReport < StandardReport
     def report
-      report_smells if @examiner.smelly?
+      header && report_smells if @examiner.smelly?
     end
   end
 end
