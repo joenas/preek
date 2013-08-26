@@ -4,9 +4,7 @@ require 'preek/smell_klass'
 module Preek
   class StandardReport
     def initialize(examiner, output)
-      @examiner = examiner
-      @output = output
-      @padding = 0
+      @examiner, @output = examiner, output
     end
 
     def report

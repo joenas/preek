@@ -10,6 +10,7 @@ module Preek
     end
 
     def perform
+      @reporter = StandardReport if sources.count == 1
       sources.each do |source|
         examiner = ::Reek::Examiner.new(source)
         filter_excludes_from(examiner)
@@ -44,7 +45,7 @@ module Preek
     end
 
     def sources
-      Reek::Source::SourceLocator.new(existing_files).all_sources
+      @sources ||= Reek::Source::SourceLocator.new(existing_files).all_sources
     end
   end
 end
