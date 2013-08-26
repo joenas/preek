@@ -9,6 +9,12 @@ describe Preek::CLI do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
+  describe 'hello', :focus do
+    #it { subject.smell(*['/home/jon/Projects/work/BOSS/obc/lib'])}
+    #it { subject.smell(*[test_file('non_smelly'), test_file('too_many_statements'), test_file('two_smelly_classes')])}
+    it { subject.smell(*['/home/jon/Projects/gems/preek/lib'])}
+  end
+
   describe "#version" do
     let(:output) { capture(:stdout) { subject.version} }
     it "outputs the gem version in the right format" do
