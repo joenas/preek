@@ -2,13 +2,17 @@ require 'preek/ext/smell_warning'
 require 'preek/smell_file'
 require 'preek/smell_klass'
 module Preek
-  class StandardReport
+  class VerboseReport
+    def self.verbose?
+      true
+    end
+
     def initialize(examiner, output)
       @examiner, @output = examiner, output
     end
 
     def report
-      header
+      print_header
       if @examiner.smelly?
         report_smells
       else
@@ -18,7 +22,7 @@ module Preek
 
     private
 
-    def header
+    def print_header
       @output.print_line
       @output.blue :file, "#{@examiner.description}\n"
     end
@@ -28,11 +32,15 @@ module Preek
     end
 
     def report_smells
-      smell_file.klasses.each do |name, klass|
+      smell_file.klasses do |klass|
         @output.green :class, klass.name
         @output.red :smells, ''
-        print_klass_smells klass.smells
+        klass.smells.each &print_smell
       end
+    end
+
+    def print_smell
+      lambda {|smell| @output.status nil, smell }
     end
 
     def print_klass_smells(smells)
@@ -44,9 +52,13 @@ module Preek
     end
   end
 
-  class QuietReport < StandardReport
+  class QuietReport < VerboseReport
+    def self.verbose?
+      false
+    end
+
     def report
-      header && report_smells if @examiner.smelly?
+      print_header && report_smells if @examiner.smelly?
     end
   end
 end

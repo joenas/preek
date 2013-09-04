@@ -1,7 +1,6 @@
 module Preek
   # A smelly file
   class SmellFile
-    attr_reader :klasses
 
     def initialize(examiner)
       @examiner = examiner
@@ -14,6 +13,13 @@ module Preek
     end
 
     alias :filename :file
+
+    def klasses
+      return @klasses unless block_given?
+      @klasses.each do |name, klass|
+        yield klass
+      end
+    end
 
   private
     def add_smells_to_klasses

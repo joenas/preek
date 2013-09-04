@@ -13,20 +13,21 @@ module Preek
     end
 
     desc 'smell FILE(S)|DIR', 'Pretty format Reek output'
+
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
-                  desc: 'include IrresponsibleModule smell in output.'
+                  desc: 'Include IrresponsibleModule smell in output.'
 
     method_option :compact,
                   type: :boolean,
                   aliases: '-c',
-                  desc: 'Compact output'
+                  desc: 'Compact output.'
 
-    method_option :quiet,
+    method_option :verbose,
                   type: :boolean,
-                  aliases: '-q',
-                  desc: 'Dont display files with no smells'
+                  aliases: '-v',
+                  desc: 'Report files with no smells.'
 
 
     def smell(*args)
@@ -36,7 +37,7 @@ module Preek
   private
 
     def reporter
-      options[:quiet] ? QuietReport : StandardReport
+      options[:verbose] ? VerboseReport : QuietReport
     end
 
     def output

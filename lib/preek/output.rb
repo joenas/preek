@@ -23,11 +23,10 @@ module Preek
   end
 
   class CompactOutput < Output
-    def status(*args)
-      title = args[0].to_s
-      title += ": " if args[0].is_a?(Symbol)
-      say title, args[2], false
-      say args[1]
+    def status(title, text, color = nil)
+      title = title.to_s + ": " if title.is_a?(Symbol)
+      say title, color, false
+      say text
     end
 
     def print_line

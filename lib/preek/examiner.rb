@@ -2,34 +2,50 @@ require 'reek/examiner'
 
 module Preek
   class Examiner
-    def initialize(files, excludes = [], reporter: StandardReport, output: Output)
+    def initialize(files, excludes = [], reporter: VerboseReport, output: Output)
       @files = files
       @excludes = excludes
       @reporter = reporter
       @output = output.new
+      @total_smells = 0
     end
 
     def perform
-      @reporter = StandardReport if sources.count == 1
-      sources.each do |source|
-        examiner = ::Reek::Examiner.new(source)
-        filter_excludes_from(examiner)
-        @reporter.new(examiner, @output).report
-      end
+      examine_and_report
+      report_totals if totals_to_report?
       @output.print_line
-      report_non_existing_files if non_existing_files?
+      report_non_existing if non_existing_files?
     end
 
   private
-    def report_non_existing_files
-      @output.red :error, %{No such file(s) - #{non_existing_files.join(', ')}.\n}
-      @output.print_line
+    def examine_and_report
+      sources.each do |source|
+        examiner = Reek::Examiner.new(source)
+        filter_excludes_from(examiner)
+        @reporter.new(examiner, @output).report
+        @total_smells += examiner.smells_count
+      end
     end
 
     def filter_excludes_from(examiner)
       examiner.smells.delete_if do |smell|
         @excludes.include? smell.smell_class
       end
+    end
+
+    def totals_to_report?
+      return false if @reporter.verbose? || @sources.count == 0
+      @total_smells == 0
+    end
+
+    def report_totals
+      @output.print_line
+      @output.green :success, %(No smells detected)
+    end
+
+    def report_non_existing
+      @output.red :error, %{No such file(s) - #{non_existing_files.join(', ')}.\n}
+      @output.print_line
     end
 
     def existing_files
