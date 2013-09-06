@@ -2,11 +2,12 @@ require 'reek/examiner'
 
 module Preek
   class Examiner
-    def initialize(files, excludes = [], reporter: VerboseReport, output: Output)
+    def initialize(files, excludes = [], options = {})
       @files = files
       @excludes = excludes
-      @reporter = reporter
-      @output = output.new
+      @reporter = options[:reporter] || VerboseReport
+      output_class = options[:output] || Output
+      @output = output_class.new
       @total_smells = 0
     end
 
