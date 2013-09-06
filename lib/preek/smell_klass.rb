@@ -1,5 +1,5 @@
 module Preek
-  # A container for a smelly klass in a file!
+  # A container for smells in a class
   class SmellKlass
     attr_reader :name
 
