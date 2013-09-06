@@ -7,13 +7,33 @@ module Preek
   class CLI < Thor
     include Thor::Actions
 
+    def self.dispatch(meth, given_args, given_opts, config)
+      meth = given_args[0]
+      given_args.unshift 'smell' unless self.all_tasks[meth]
+      puts self.all_tasks[meth]
+      puts given_args.inspect
+      super(meth, given_args, given_opts, config)
+    end
+
+
+    # def initialize(args=[], options={}, config={})
+    #   current_command = config[:current_command]
+    #   unless respond_to? current_command.name
+    #     puts "not a command"
+    #     smell_command = self.class.all_tasks['smell']
+    #     #puts smell_command
+    #     config[:current_command] = smell_command
+    #     puts config[:current_command]
+    #   end
+    #   super(args, options, config)
+    # end
+
     desc 'version', 'Shows version'
     def version(*)
       say VERSION
     end
 
     desc 'smell FILE(S)|DIR', 'Pretty format Reek output'
-
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
@@ -30,11 +50,15 @@ module Preek
                   desc: 'Report files with no smells.'
 
 
-    def smell(*args)
+    def smell(files)
       Examiner.new(args, excludes, reporter: reporter, output: output).perform
     end
 
   private
+
+    def invoke
+      puts "tralalla"
+    end
 
     def reporter
       options[:verbose] ? VerboseReport : QuietReport
