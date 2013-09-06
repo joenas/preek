@@ -31,8 +31,9 @@ Usage:
   preek smell FILE(S)|DIR
 
 Options:
-  -i, [--irresponsible]  # include IrresponsibleModule smell in output.
-
+  -i, [--irresponsible]  # Include IrresponsibleModule smell in output.
+  -c, [--compact]        # Compact output.
+  -v, [--verbose]        # Report files with no smells
 
 Commands:
   preek help [COMMAND]     # Describe available commands or one specific command
