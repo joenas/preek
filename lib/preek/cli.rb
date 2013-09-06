@@ -1,8 +1,5 @@
 require 'thor'
-
 require 'preek/version'
-require 'preek/smell_collector'
-require 'preek/smell_reporter'
 
 module Preek
 
@@ -16,15 +13,37 @@ module Preek
     end
 
     desc 'smell FILE(S)|DIR', 'Pretty format Reek output'
+
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
-                  desc: 'include IrresponsibleModule smell in output.'
+                  desc: 'Include IrresponsibleModule smell in output.'
+
+    method_option :compact,
+                  type: :boolean,
+                  aliases: '-c',
+                  desc: 'Compact output.'
+
+    method_option :verbose,
+                  type: :boolean,
+                  aliases: '-v',
+                  desc: 'Report files with no smells.'
+
+
     def smell(*args)
-      Preek::Smell(args, excludes)
+      Examiner.new(args, excludes, reporter: reporter, output: output).perform
     end
 
   private
+
+    def reporter
+      options[:verbose] ? VerboseReport : QuietReport
+    end
+
+    def output
+      options[:compact] ? CompactOutput : Output
+    end
+
     def _aliases
       {
         irresponsible: 'IrresponsibleModule'
