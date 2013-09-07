@@ -9,21 +9,56 @@ describe Preek::CLI do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
-  describe "#version" do
-    When(:output) { capture(:stdout) { subject.version} }
-    Then {output.should =~ /(\d\.?){3}/}
+  When(:output) { capture(:stdout) { Preek::CLI.start args } }
+
+  describe 'Commands' do
+
+    context 'errors' do
+      When(:output) { capture(:stderr) { Preek::CLI.start args } }
+
+      context 'with no argument' do
+        Given(:args){ [] }
+        Then{ output.should include("was called with no arguments")}
+      end
+
+      context 'with "smell" and no argument' do
+        Given(:args){ ['smell'] }
+        Then{ output.should include("was called with no arguments")}
+      end
+    end
+
+    context 'no errors' do
+
+      context 'with "smell" and a file as argument' do
+        Given(:args){ ['smell', test_file('non_smelly')] }
+        Then{output.should include("No smells")}
+      end
+
+      context 'with a file as argument' do
+        Given(:args){ [test_file('non_smelly')] }
+        Then{output.should include("No smells")}
+      end
+
+      context 'with "help" as argument' do
+        Given(:args){ ['help'] }
+        Then{output.should =~ /Commands:/}
+      end
+
+      context 'with "version"' do
+        Given(:args){ ['version'] }
+        Then {output.should =~ /(\d\.?){3}/}
+      end
+
+      context "with non-existing file in ARGS" do
+        Given(:args) { ['i/am/not/a_file'] }
+        Then{output.should_not include("success")}
+        Then{output.should include("No such file")}
+        Then{output.should include(args[0])}
+      end
+    end
   end
 
-  describe "#smell" do
-
-    When(:output) { capture(:stdout) { subject.smell(*args) } }
-
-    context "with non-existing file in ARGS" do
-      Given(:args) { ['i/am/not/a_file'] }
-      Then{output.should_not include("success")}
-      Then{output.should include("No such file")}
-      Then{output.should include(args[0])}
-    end
+  describe "Reports" do
 
     context 'default quiet report' do
 
@@ -77,7 +112,7 @@ describe Preek::CLI do
     end
 
     context 'with --irresponsible option' do
-      Given{subject.options =  {irresponsible: true} }
+      When(:output) { capture(:stdout) { Preek::CLI.start ['-i'].concat(args) } }
 
       context "when given file has Irresponsible smell" do
         Given(:args){ [test_file('irresponsible')] }
@@ -104,7 +139,7 @@ describe Preek::CLI do
     end
 
     context 'with --verbose option' do
-      Given{subject.options =  {verbose: true}}
+      When(:output) { capture(:stdout) { Preek::CLI.start ['--verbose'].concat(args) } }
 
       context "when given file has no smells" do
         Given(:args){ [test_file('non_smelly')] }

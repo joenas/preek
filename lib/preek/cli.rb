@@ -1,19 +1,21 @@
 require 'thor'
 require 'preek/version'
+require 'preek/default_command'
 
 module Preek
 
   # whoop whoop
   class CLI < Thor
     include Thor::Actions
+    extend DefaultCommand
 
     desc 'version', 'Shows version'
     def version(*)
       say VERSION
     end
 
-    desc 'smell FILE(S)|DIR', 'Pretty format Reek output'
-
+    default_command :smell
+    desc 'smell FILE(S)|DIR', 'Shorthand: preek [FILES]'
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
@@ -30,12 +32,11 @@ module Preek
                   desc: 'Report files with no smells.'
 
 
-    def smell(*args)
-      Examiner.new(args, excludes, reporter: reporter, output: output).perform
+    def smell(*files)
+      Examiner.new(files, excludes, reporter: reporter, output: output).perform
     end
 
   private
-
     def reporter
       options[:verbose] ? VerboseReport : QuietReport
     end
