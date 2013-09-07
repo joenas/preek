@@ -28,7 +28,7 @@ From source
 ### CLI
 ```bash
 Usage:
-  preek smell FILE(S)|DIR
+  preek FILE(S)|DIR
 
 Options:
   -i, [--irresponsible]  # Include IrresponsibleModule smell in output.
