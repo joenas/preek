@@ -11,9 +11,11 @@ describe Preek::CLI do
 
   When(:output) { capture(:stdout) { Preek::CLI.start args } }
 
-  describe 'monkey patching default action' do
+  describe 'Commands' do
+
     context 'errors' do
       When(:output) { capture(:stderr) { Preek::CLI.start args } }
+
       context 'with no argument' do
         Given(:args){ [] }
         Then{ output.should include("was called with no arguments")}
@@ -26,7 +28,6 @@ describe Preek::CLI do
     end
 
     context 'no errors' do
-      When(:output) { capture(:stdout) { Preek::CLI.start args } }
 
       context 'with "smell" and a file as argument' do
         Given(:args){ ['smell', test_file('non_smelly')] }
@@ -42,22 +43,22 @@ describe Preek::CLI do
         Given(:args){ ['help'] }
         Then{output.should =~ /Commands:/}
       end
+
+      context 'with "version"' do
+        Given(:args){ ['version'] }
+        Then {output.should =~ /(\d\.?){3}/}
+      end
+
+      context "with non-existing file in ARGS" do
+        Given(:args) { ['i/am/not/a_file'] }
+        Then{output.should_not include("success")}
+        Then{output.should include("No such file")}
+        Then{output.should include(args[0])}
+      end
     end
   end
 
-  describe "#version" do
-    When(:output) { capture(:stdout) { subject.version} }
-    Then {output.should =~ /(\d\.?){3}/}
-  end
-
-  describe "#smell" do
-
-    context "with non-existing file in ARGS" do
-      Given(:args) { ['i/am/not/a_file'] }
-      Then{output.should_not include("success")}
-      Then{output.should include("No such file")}
-      Then{output.should include(args[0])}
-    end
+  describe "Reports" do
 
     context 'default quiet report' do
 
@@ -139,7 +140,6 @@ describe Preek::CLI do
 
     context 'with --verbose option' do
       When(:output) { capture(:stdout) { Preek::CLI.start ['--verbose'].concat(args) } }
-      #Given{subject.options =  {verbose: true}}
 
       context "when given file has no smells" do
         Given(:args){ [test_file('non_smelly')] }
