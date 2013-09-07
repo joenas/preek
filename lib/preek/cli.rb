@@ -7,33 +7,14 @@ module Preek
   class CLI < Thor
     include Thor::Actions
 
-    def self.dispatch(meth, given_args, given_opts, config)
-      meth = given_args[0]
-      given_args.unshift 'smell' unless self.all_tasks[meth]
-      puts self.all_tasks[meth]
-      puts given_args.inspect
-      super(meth, given_args, given_opts, config)
-    end
-
-
-    # def initialize(args=[], options={}, config={})
-    #   current_command = config[:current_command]
-    #   unless respond_to? current_command.name
-    #     puts "not a command"
-    #     smell_command = self.class.all_tasks['smell']
-    #     #puts smell_command
-    #     config[:current_command] = smell_command
-    #     puts config[:current_command]
-    #   end
-    #   super(args, options, config)
-    # end
-
     desc 'version', 'Shows version'
     def version(*)
       say VERSION
     end
 
-    desc 'smell FILE(S)|DIR', 'Pretty format Reek output'
+    default_command :smell
+
+    desc 'smell FILE(S)|DIR', 'Shorthand: preek [FILES]'
     method_option :irresponsible,
                   type: :boolean,
                   aliases: '-i',
@@ -50,16 +31,20 @@ module Preek
                   desc: 'Report files with no smells.'
 
 
-    def smell(files)
-      Examiner.new(args, excludes, reporter: reporter, output: output).perform
+    def smell(*files)
+      return help if files.empty?
+      Examiner.new(files, excludes, reporter: reporter, output: output).perform
     end
+
+
+  # no_commands do
+  #   def invoke_command(command, trailing)
+  #     puts command.inspect
+  #     puts trailing.inspect
+  #   end
+  # end
 
   private
-
-    def invoke
-      puts "tralalla"
-    end
-
     def reporter
       options[:verbose] ? VerboseReport : QuietReport
     end
@@ -84,6 +69,12 @@ module Preek
 
     def exclude_list
       %w(IrresponsibleModule)
+    end
+
+    # Lets monkey patch to have a default action with arguments!
+    def self.dispatch(meth, given_args, given_opts, config)
+      meth ||= default_command unless all_commands[given_args[0]]
+      super
     end
   end
 end
