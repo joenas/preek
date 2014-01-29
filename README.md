@@ -36,6 +36,7 @@ Options:
   -v, [--verbose]        # Report files with no smells
 
 Commands:
+  preek git                # Run Preek on git changes
   preek help [COMMAND]     # Describe available commands or one specific command
   preek smell FILE(S)|DIR  # Pretty format Reek output
   preek version            # Shows version
