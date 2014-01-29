@@ -36,6 +36,15 @@ module Preek
       Examiner.new(files, excludes, reporter: reporter, output: output).perform
     end
 
+    desc 'git', 'Run Preek on git changes'
+    def git
+      files = `git status -s`
+      if $?.exitstatus == 0 && !files.empty?
+        args = files.scan(/[ M?]+ (.*)/)
+        smell *args.flatten
+      end
+    end
+
   private
     def reporter
       options[:verbose] ? VerboseReport : QuietReport
