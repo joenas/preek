@@ -8,7 +8,8 @@
 # Preek
 
 For a pretty colorful output of [Reek](https://github.com/troessner/reek), which is an awesome gem!
-This is just something I came up with while learning [Thor](https://github.com/wycats/thor).
+This is just something I came up with while learning [Thor](https://github.com/wycats/thor).  
+To make your refactoring life easier you can also use [Guard::Preek](https://github.com/joenas/guard-preek)!
 
 ## Installation
 
