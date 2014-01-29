@@ -40,8 +40,8 @@ module Preek
     def git
       files = git_status
       if $?.exitstatus == 0 && !files.empty?
-        args = files.scan(/[ M?]+(.*\.rb)/)
-        smell *args.flatten
+        args = files.scan(/[ M?]+(.*\.rb)/).flatten
+        smell *args unless args.empty?
       end
     end
 

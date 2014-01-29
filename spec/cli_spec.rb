@@ -161,11 +161,19 @@ describe Preek::CLI do
 
   describe 'Git' do
     Given(:cli) { Preek::CLI.new }
-    Given(:git_output){" M .travis.yml\n M Gemfile\n M lib/random/file.rb\n M preek.gemspec\n"}
     Given{cli.stub(:git_status).and_return(git_output)}
-    Given{cli.should_receive(:smell).with('lib/random/file.rb')}
-
     When{cli.git}
-    Then{}
+
+    context 'with ruby file' do
+      Given(:git_output){" M .travis.yml\n M Gemfile\n M lib/random/file.rb\n M preek.gemspec\n"}
+      Given{cli.should_receive(:smell).with('lib/random/file.rb')}
+      Then{}
+    end
+
+    context 'without ruby file' do
+      Given(:git_output){" M .travis.yml\n M Gemfile\n M preek.gemspec\n"}
+      Given{cli.should_not receive(:smell)}
+      Then{}
+    end
   end
 end
