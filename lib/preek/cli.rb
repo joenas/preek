@@ -38,14 +38,19 @@ module Preek
 
     desc 'git', 'Run Preek on git changes'
     def git
-      files = `git status -s`
+      files = git_status
       if $?.exitstatus == 0 && !files.empty?
-        args = files.scan(/[ M?]+ (.*)/)
+        args = files.scan(/[ M?]+(.*\.rb)/)
         smell *args.flatten
       end
     end
 
   private
+
+    def git_status
+      `git status -s`
+    end
+
     def reporter
       options[:verbose] ? VerboseReport : QuietReport
     end

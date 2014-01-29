@@ -9,8 +9,6 @@ describe Preek::CLI do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
-  When(:output) { capture(:stdout) { Preek::CLI.start args } }
-
   describe 'Commands' do
 
     context 'errors' do
@@ -28,6 +26,7 @@ describe Preek::CLI do
     end
 
     context 'no errors' do
+      When(:output) { capture(:stdout) { Preek::CLI.start args } }
 
       context 'with "smell" and a file as argument' do
         Given(:args){ ['smell', test_file('non_smelly')] }
@@ -59,6 +58,7 @@ describe Preek::CLI do
   end
 
   describe "Reports" do
+    When(:output) { capture(:stdout) { Preek::CLI.start args } }
 
     context 'default quiet report' do
 
@@ -157,5 +157,15 @@ describe Preek::CLI do
         Then{output.should include(args[1], args[0])}
       end
     end
+  end
+
+  describe 'Git' do
+    Given(:cli) { Preek::CLI.new }
+    Given(:git_output){" M .travis.yml\n M Gemfile\n M lib/random/file.rb\n M preek.gemspec\n"}
+    Given{cli.stub(:git_status).and_return(git_output)}
+    Given{cli.should_receive(:smell).with('lib/random/file.rb')}
+
+    When{cli.git}
+    Then{}
   end
 end
