@@ -4,8 +4,8 @@ require File.expand_path('../lib/preek/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["Jon Neverland"]
   gem.email         = ["jonwestin@gmail.com"]
-  gem.description   = %q{Gives a nice, colorful output to Reek. Based on Thor.}
-  gem.summary       = %q{It might reek but its pretty}
+  gem.description   = %q{Preek prints Ruby code smells in color, using Reek. }
+  gem.summary       = %q{Code smells in color}
   gem.homepage      = "https://github.com/joenas/preek"
   gem.license       = 'MIT'
 
