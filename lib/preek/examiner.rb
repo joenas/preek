@@ -13,9 +13,11 @@ module Preek
 
     def perform
       examine_and_report
-      report_totals if totals_to_report?
-      @output.print_line
-      report_non_existing if non_existing_files?
+      @output.separated do
+        report_success if report_success?
+        report_total_smells unless success?
+        report_non_existing if non_existing_files?
+      end
     end
 
   private
@@ -34,19 +36,24 @@ module Preek
       end
     end
 
-    def totals_to_report?
-      return false if @reporter.verbose? || @sources.count == 0
+    def success?
       @total_smells == 0
     end
 
-    def report_totals
-      @output.print_line
+    def report_success?
+      !@reporter.verbose? && @sources.count > 0 && success?
+    end
+
+    def report_success
       @output.green :success, %(No smells detected)
+    end
+
+    def report_total_smells
+      @output.red :total, @total_smells
     end
 
     def report_non_existing
       @output.red :error, %{No such file(s) - #{non_existing_files.join(', ')}.\n}
-      @output.print_line
     end
 
     def existing_files

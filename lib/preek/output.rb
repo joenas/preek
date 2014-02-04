@@ -9,6 +9,8 @@ module Preek
       say "\n\t#{'-'*60}\n\n"
     end
 
+    alias :separator :print_line
+
     def blue(*args)
       status *args, :blue
     end
@@ -19,6 +21,12 @@ module Preek
 
     def red(*args)
       status *args, :red
+    end
+
+    def separated(&block)
+      print_line
+      yield
+      print_line
     end
   end
 
@@ -32,5 +40,6 @@ module Preek
     def print_line
       say "\n-\n\n"
     end
+    alias :separator :print_line
   end
 end

@@ -68,7 +68,7 @@ describe Preek::CLI do
         Then{output.should_not include(args[0])}
       end
 
-      context "when given file has no smells" do
+      context "when given file has no smells and the other does not exist" do
         Given(:args){ [test_file('non_smelly'), 'i/am/not/a_file'] }
         Then{output.should include("No smells")}
         Then{output.should_not include(args[0])}
@@ -86,6 +86,10 @@ describe Preek::CLI do
         Given(:args){ [test_file('two_smelly_classes')] }
         Then{output.should include('SecondSmelly')}
         Then{output.should include('UncommunicativeMethodName')}
+
+        describe 'total count' do
+          Then{output.should match(/total.*1/)}
+        end
       end
 
       context "when given two smelly files" do
@@ -93,6 +97,10 @@ describe Preek::CLI do
         Then{output.should include('UncommunicativeMethodName', 'TooManyStatements')}
         Then{output.should include(args[0], args[1])}
         Then{output.should include("#loong_method", "#x")}
+
+        describe 'total count' do
+          Then{output.should match(/total.*2/)}
+        end
       end
 
       context "when given one file without smells and another with smells" do
