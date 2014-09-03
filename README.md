@@ -63,6 +63,16 @@ Preek::Smell(filenames, excludes)
 
 ```
 
+### Git
+To run preek on your code before commit, place this in `.git/hooks/pre-commit`
+
+```bash
+#!/bin/sh
+exec bundle exec preek git
+0
+```
+
+
 ## Contributing
 
 1. Fork it
