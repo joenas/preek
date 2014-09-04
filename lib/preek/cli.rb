@@ -42,7 +42,7 @@ module Preek
       smell *args unless args.empty?
     end
 
-  private
+    private
 
     def git_status
       `git status -s`
