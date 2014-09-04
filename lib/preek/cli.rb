@@ -38,7 +38,7 @@ module Preek
 
     desc 'git', 'Run Preek on git changes'
     def git
-      args = git_status.scan(/[ M?]+(.*\.rb)/).flatten
+      args = git_status.scan(/[ M?]{2} (.*\.rb)/).flatten
       smell *args unless args.empty?
     end
 

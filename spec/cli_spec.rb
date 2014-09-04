@@ -178,6 +178,12 @@ describe Preek::CLI do
       Then{}
     end
 
+    context 'with deleted file' do
+      Given(:git_output){" M .travis.yml\n M Gemfile\n M lib/random/file.rb\n D ruby.rb\n"}
+      Given{cli.should_receive(:smell).with('lib/random/file.rb')}
+      Then{}
+    end
+
     context 'without ruby file' do
       Given(:git_output){" M .travis.yml\n M Gemfile\n M preek.gemspec\n"}
       Given{cli.should_not_receive(:smell)}
