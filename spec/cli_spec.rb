@@ -16,12 +16,12 @@ describe Preek::CLI do
 
       context 'with no argument' do
         Given(:args){ [] }
-        Then{ output.should include("was called with no arguments")}
+        Then{ expect(output).to include("was called with no arguments")}
       end
 
       context 'with "smell" and no argument' do
         Given(:args){ ['smell'] }
-        Then{ output.should include("was called with no arguments")}
+        Then{ expect(output).to include("was called with no arguments")}
       end
     end
 
@@ -30,29 +30,29 @@ describe Preek::CLI do
 
       context 'with "smell" and a file as argument' do
         Given(:args){ ['smell', test_file('non_smelly')] }
-        Then{output.should include("No smells")}
+        Then{expect(output).to include("No smells")}
       end
 
       context 'with a file as argument' do
         Given(:args){ [test_file('non_smelly')] }
-        Then{output.should include("No smells")}
+        Then{expect(output).to include("No smells")}
       end
 
       context 'with "help" as argument' do
         Given(:args){ ['help'] }
-        Then{output.should =~ /Commands:/}
+        Then{expect(output).to match /Commands:/}
       end
 
       context 'with "version"' do
         Given(:args){ ['version'] }
-        Then {output.should =~ /(\d\.?){3}/}
+        Then {expect(output).to match /(\d\.?){3}/}
       end
 
       context "with non-existing file in ARGS" do
         Given(:args) { ['i/am/not/a_file'] }
-        Then{output.should_not include("success")}
-        Then{output.should include("No such file")}
-        Then{output.should include(args[0])}
+        Then{expect(output).to_not include("success")}
+        Then{expect(output).to include("No such file")}
+        Then{expect(output).to include(args[0])}
       end
     end
   end
@@ -64,58 +64,58 @@ describe Preek::CLI do
 
       context "when given file has no smells" do
         Given(:args){ [test_file('non_smelly')] }
-        Then{output.should include("No smells")}
-        Then{output.should_not include(args[0])}
+        Then{expect(output).to include("No smells")}
+        Then{expect(output).to_not include(args[0])}
       end
 
       context "when given file has no smells and the other does not exist" do
         Given(:args){ [test_file('non_smelly'), 'i/am/not/a_file'] }
-        Then{output.should include("No smells")}
-        Then{output.should_not include(args[0])}
-        Then{output.should include("No such file")}
-        Then{output.should include(args[1])}
+        Then{expect(output).to include("No smells")}
+        Then{expect(output).to_not include(args[0])}
+        Then{expect(output).to include("No such file")}
+        Then{expect(output).to include(args[1])}
       end
 
       context "when given file has Irresponsible smell" do
         Given(:args){ [test_file('irresponsible')] }
-        Then{output.should include("No smells")}
-        Then{output.should_not include(args[0])}
+        Then{expect(output).to include("No smells")}
+        Then{expect(output).to_not include(args[0])}
       end
 
       context "when given a file with two smelly classes" do
         Given(:args){ [test_file('two_smelly_classes')] }
-        Then{output.should include('SecondSmelly')}
-        Then{output.should include('UncommunicativeMethodName')}
+        Then{expect(output).to include('SecondSmelly')}
+        Then{expect(output).to include('UncommunicativeMethodName')}
 
         describe 'total count' do
-          Then{output.should match(/total.*1/)}
+          Then{expect(output).to match(/total.*1/)}
         end
       end
 
       context "when given two smelly files" do
         Given(:args){ [test_file('too_many_statements'), test_file('two_smelly_classes')] }
-        Then{output.should include('UncommunicativeMethodName', 'TooManyStatements')}
-        Then{output.should include(args[0], args[1])}
-        Then{output.should include("#loong_method", "#x")}
+        Then{expect(output).to include('UncommunicativeMethodName', 'TooManyStatements')}
+        Then{expect(output).to include(args[0], args[1])}
+        Then{expect(output).to include("#loong_method", "#x")}
 
         describe 'total count' do
-          Then{output.should match(/total.*2/)}
+          Then{expect(output).to match(/total.*2/)}
         end
       end
 
       context "when given one file without smells and another with smells" do
         Given(:args){ [test_file('non_smelly'), test_file('too_many_statements')] }
 
-        Then{output.should include('TooManyStatements')}
-        Then{output.should include(args[1])}
-        Then{output.should include("#loong_method")}
-        Then{output.should_not include(args[0])}
+        Then{expect(output).to include('TooManyStatements')}
+        Then{expect(output).to include(args[1])}
+        Then{expect(output).to include("#loong_method")}
+        Then{expect(output).to_not include(args[0])}
       end
 
       context "when given file has NilCheck smell" do
         Given(:args){ [test_file('nil_check')] }
-        Then{output.should include("NilCheck")}
-        Then{output.should include(args[0])}
+        Then{expect(output).to include("NilCheck")}
+        Then{expect(output).to include(args[0])}
       end
     end
 
@@ -124,25 +124,25 @@ describe Preek::CLI do
 
       context "when given file has Irresponsible smell" do
         Given(:args){ [test_file('irresponsible')] }
-        Then{output.should include("Irresponsible")}
+        Then{expect(output).to include("Irresponsible")}
       end
 
       context "when given a file with two smelly classes" do
         Given(:args){ [test_file('two_smelly_classes')] }
-        Then{output.should include('FirstSmelly', 'SecondSmelly')}
-        Then{output.should include('IrresponsibleModule', 'UncommunicativeMethodName')}
+        Then{expect(output).to include('FirstSmelly', 'SecondSmelly')}
+        Then{expect(output).to include('IrresponsibleModule', 'UncommunicativeMethodName')}
       end
 
       context "when given two smelly files" do
         Given(:args){ [test_file('too_many_statements'), test_file('two_smelly_classes')] }
-        Then{output.should include('IrresponsibleModule', 'UncommunicativeMethodName', 'TooManyStatements')}
-        Then{output.should include(args[0], args[1])}
-        Then{output.should include("#loong_method", "#x")}
+        Then{expect(output).to include('IrresponsibleModule', 'UncommunicativeMethodName', 'TooManyStatements')}
+        Then{expect(output).to include(args[0], args[1])}
+        Then{expect(output).to include("#loong_method", "#x")}
       end
 
       context "when given a file with two different smells" do
         Given(:args){ [test_file('irresponsible_and_lazy')] }
-        Then{output.should include('IrresponsibleModule', 'UncommunicativeMethodName')}
+        Then{expect(output).to include('IrresponsibleModule', 'UncommunicativeMethodName')}
       end
     end
 
@@ -151,18 +151,18 @@ describe Preek::CLI do
 
       context "when given file has no smells" do
         Given(:args){ [test_file('non_smelly')] }
-        Then{output.should include("No smells")}
-        Then{output.should include(args[0])}
+        Then{expect(output).to include("No smells")}
+        Then{expect(output).to include(args[0])}
       end
 
       context "when given two smelly files" do
         Given(:args){ [test_file('too_many_statements'), test_file('two_smelly_classes')] }
-        Then{output.should include(args[0], args[1])}
+        Then{expect(output).to include(args[0], args[1])}
       end
 
       context "when given one file without smells and another with smells" do
         Given(:args){ [test_file('non_smelly'), test_file('too_many_statements')] }
-        Then{output.should include(args[1], args[0])}
+        Then{expect(output).to include(args[1], args[0])}
       end
     end
   end
@@ -180,7 +180,7 @@ describe Preek::CLI do
 
     context 'without ruby file' do
       Given(:git_output){" M .travis.yml\n M Gemfile\n M preek.gemspec\n"}
-      Given{cli.should_not receive(:smell)}
+      Given{cli.should_not_receive(:smell)}
       Then{}
     end
   end

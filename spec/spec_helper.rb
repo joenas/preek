@@ -11,4 +11,8 @@ RSpec.configure do |config|
   config.filter_run :focus
   config.order = 'random'
   config.fail_fast = true
+
+ config.mock_with :rspec do |mocks|
+    mocks.syntax = :should
+  end
 end
