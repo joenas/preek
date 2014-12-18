@@ -9,6 +9,7 @@ describe Preek::CLI do
     File.expand_path(File.join(File.dirname(__FILE__),'test_files/',"#{file_name}.rb"))
   end
 
+
   describe 'Commands' do
 
     context 'errors' do
@@ -165,6 +166,15 @@ describe Preek::CLI do
         Then{expect(output).to include(args[1], args[0])}
       end
     end
+
+    # Also tests proper output fully
+    context "with --compact option" do
+      Given(:args){ [test_file('too_many_statements')] }
+      Given(:expected_output){"\n-\n\nfile: #{__dir__}/test_files/too_many_statements.rb\nclass: TooManyStatments\nsmells: \n#loong_method has approx 7 statements (TooManyStatements) at lines 4\n\n-\n\ntotal: 1\n\n-\n\n"}
+      When(:output) { capture(:stdout) { Preek::CLI.start ['-c'].concat(args) } }
+      Then{expect(output).to eq expected_output}
+    end
+
   end
 
   describe 'Git' do

@@ -2,15 +2,15 @@ module Reek
   # Is was easier this way
   class SmellWarning
     def klass
-      @location[CONTEXT_KEY][/^([\w:]*)(#\w*)?/, 1]
+      context[/^([\w:]*)(#\w*)?/, 1]
     end
 
     def smell_method
-      @location[CONTEXT_KEY][/^([\w:]*)(#\w*)?/, 2]
+      context[/^([\w:]*)(#\w*)?/, 2]
     end
 
     def smell_string
-      "#{smell_method} #{@smell['message']} (#{@smell['subclass']}) at lines #{Array(@location['lines'])*','}"
+      "#{smell_method} #{message} (#{subclass}) at lines #{Array(lines)*','}"
     end
   end
 end
