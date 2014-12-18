@@ -170,7 +170,8 @@ describe Preek::CLI do
     # Also tests proper output fully
     context "with --compact option" do
       Given(:args){ [test_file('too_many_statements')] }
-      Given(:expected_output){"\n-\n\nfile: #{__dir__}/test_files/too_many_statements.rb\nclass: TooManyStatments\nsmells: \n#loong_method has approx 7 statements (TooManyStatements) at lines 4\n\n-\n\ntotal: 1\n\n-\n\n"}
+      Given(:dir){File.dirname(__FILE__)}
+      Given(:expected_output){"\n-\n\nfile: #{dir}/test_files/too_many_statements.rb\nclass: TooManyStatments\nsmells: \n#loong_method has approx 7 statements (TooManyStatements) at lines 4\n\n-\n\ntotal: 1\n\n-\n\n"}
       When(:output) { capture(:stdout) { Preek::CLI.start ['-c'].concat(args) } }
       Then{expect(output).to eq expected_output}
     end
