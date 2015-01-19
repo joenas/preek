@@ -32,7 +32,7 @@ module Preek
 
     def filter_excludes_from(examiner)
       examiner.smells.delete_if do |smell|
-        @excludes.include? smell.smell_class
+        @excludes.include? smell.class
       end
     end
 

@@ -77,8 +77,8 @@ describe Preek::CLI do
         Then{expect(output).to include(args[1])}
       end
 
-      context "when given file has Irresponsible smell" do
-        Given(:args){ [test_file('irresponsible')] }
+      context "when given file has no smells" do
+        Given(:args){ [test_file('no_smells')] }
         Then{expect(output).to include("No smells")}
         Then{expect(output).to_not include(args[0])}
       end
@@ -89,7 +89,7 @@ describe Preek::CLI do
         Then{expect(output).to include('UncommunicativeMethodName')}
 
         describe 'total count' do
-          Then{expect(output).to match(/total.*1/)}
+          Then{expect(output).to match(/total.*2/)}
         end
       end
 
@@ -100,7 +100,7 @@ describe Preek::CLI do
         Then{expect(output).to include("#loong_method", "#x")}
 
         describe 'total count' do
-          Then{expect(output).to match(/total.*2/)}
+          Then{expect(output).to match(/total.*3/)}
         end
       end
 
@@ -131,7 +131,7 @@ describe Preek::CLI do
       context "when given a file with two smelly classes" do
         Given(:args){ [test_file('two_smelly_classes')] }
         Then{expect(output).to include('FirstSmelly', 'SecondSmelly')}
-        Then{expect(output).to include('IrresponsibleModule', 'UncommunicativeMethodName')}
+        Then{expect(output).to include('Reek::Smells::IrresponsibleModule', 'Reek::Smells::UncommunicativeMethodName')}
       end
 
       context "when given two smelly files" do
@@ -171,7 +171,7 @@ describe Preek::CLI do
     context "with --compact option" do
       Given(:args){ [test_file('too_many_statements')] }
       Given(:dir){File.dirname(__FILE__)}
-      Given(:expected_output){"\n-\n\nfile: #{dir}/test_files/too_many_statements.rb\nclass: TooManyStatments\nsmells: \n#loong_method has approx 7 statements (TooManyStatements) at lines 4\n\n-\n\ntotal: 1\n\n-\n\n"}
+      Given(:expected_output){"\n-\n\nfile: #{dir}/test_files/too_many_statements.rb\nclass: TooManyStatments\nsmells: \n#loong_method has approx 7 statements (Reek::Smells::TooManyStatements) at lines 4\n\n-\n\ntotal: 1\n\n-\n\n"}
       When(:output) { capture(:stdout) { Preek::CLI.start ['-c'].concat(args) } }
       Then{expect(output).to eq expected_output}
     end

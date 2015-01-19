@@ -10,7 +10,7 @@ module Reek
     end
 
     def smell_string
-      "#{smell_method} #{message} (#{subclass}) at lines #{Array(lines)*','}"
+      "#{smell_method} #{message} (#{smell_detector.class}) at lines #{Array(lines)*','}"
     end
   end
 end
