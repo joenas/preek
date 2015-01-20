@@ -17,10 +17,10 @@ Gem::Specification.new do |gem|
   gem.require_paths = ["lib"]
   gem.version       = Preek::VERSION
   gem.add_runtime_dependency "thor", "~> 0.18"
-  gem.add_runtime_dependency "reek", "~> 1.5.1"
-  gem.add_development_dependency "rspec", "~> 2.14.1"
-  gem.add_development_dependency "rspec-given"
+  gem.add_runtime_dependency "reek", "~> 1.6.3"
+  gem.add_development_dependency "rspec", "~> 3.1.0"
+  gem.add_development_dependency "rspec-given", "~> 3.6.0"
   gem.add_development_dependency "guard", "~> 2.3.0"
-  gem.add_development_dependency "guard-rspec", "~> 4.2.5"
+  gem.add_development_dependency "guard-rspec", "~> 4.2.10"
   gem.add_development_dependency 'coveralls'
 end
