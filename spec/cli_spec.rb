@@ -77,8 +77,8 @@ describe Preek::CLI do
         Then{expect(output).to include(args[1])}
       end
 
-      context "when given file has no smells" do
-        Given(:args){ [test_file('no_smells')] }
+      context "when given file has Irresponsible smell" do
+        Given(:args){ [test_file('irresponsible')] }
         Then{expect(output).to include("No smells")}
         Then{expect(output).to_not include(args[0])}
       end
